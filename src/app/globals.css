@@ -1,0 +1,158 @@
+@import "tailwindcss";
+
+/*
+ * BridgeFund design tokens.
+ * Raw brand values live on :root; Tailwind utilities are generated from the
+ * @theme block below (e.g. bg-navy, text-muted-foreground, bg-success-soft).
+ * Change a value here and it updates everywhere.
+ */
+:root {
+  /* Brand */
+  --brand-navy: #142b49;
+  --brand-blue: #2563eb;
+  --brand-blue-hover: #1d4ed8;
+
+  /* Surfaces & text */
+  --background: #f8fafc;
+  --surface: #ffffff;
+  --foreground: #172033;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #eff6ff;
+
+  /* Lines & focus */
+  --border: #e2e8f0;
+  --input: #cbd5e1;
+  --ring: #2563eb;
+
+  /* Status */
+  --success: #16a34a;
+  --success-soft: #f0fdf4;
+  --success-foreground: #15803d;
+  --warning-soft: #fffbeb;
+  --warning-foreground: #b45309;
+  --destructive: #dc2626;
+  --destructive-soft: #fef2f2;
+  --destructive-foreground: #b91c1c;
+
+  --radius: 0.75rem;
+}
+
+@theme inline {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+
+  --color-navy: var(--brand-navy);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--surface);
+  --color-card-foreground: var(--foreground);
+
+  --color-primary: var(--brand-blue);
+  --color-primary-hover: var(--brand-blue-hover);
+  --color-primary-foreground: #ffffff;
+  --color-secondary: var(--muted);
+  --color-secondary-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--brand-navy);
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning-soft: var(--warning-soft);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-soft: var(--destructive-soft);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --shadow-card:
+    0 1px 2px rgb(20 43 73 / 0.04), 0 1px 3px rgb(20 43 73 / 0.06);
+  --shadow-popover: 0 8px 24px rgb(20 43 73 / 0.12);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+}
+
+/* Mobile navigation drawer + overlay (Radix Dialog) */
+@keyframes overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes overlay-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes drawer-in {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes drawer-out {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+[data-state="open"].sheet-overlay {
+  animation: overlay-in 150ms ease-out;
+}
+[data-state="closed"].sheet-overlay {
+  animation: overlay-out 120ms ease-in;
+}
+[data-state="open"].sheet-content {
+  animation: drawer-in 200ms ease-out;
+}
+[data-state="closed"].sheet-content {
+  animation: drawer-out 150ms ease-in;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-state].sheet-overlay,
+  [data-state].sheet-content {
+    animation: none;
+  }
+}
