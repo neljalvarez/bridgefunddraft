@@ -55,6 +55,23 @@ Copy `.env.example` to `.env.local`. Real keys must never be committed; `.gitign
 
 Anything prefixed `NEXT_PUBLIC_` is shipped to the browser. Keep server-only secrets (for example a Supabase service role key) unprefixed and out of client code.
 
+## Connecting Supabase
+
+The "BridgeFund isn't connected to Supabase yet" message appears until your project keys are in `.env.local`.
+
+1. Sign in at <https://supabase.com/dashboard> and open your project (or click **New project**).
+2. Open **Project Settings → API** (in newer dashboards: **Settings → API Keys**).
+3. Copy the **Project URL** and the **anon / publishable** key. Do not use the `service_role` / secret key.
+4. In the project folder run `cp .env.example .env.local`, then paste the values:
+   ```
+   NEXT_PUBLIC_SUPABASE_URL=https://your-project-ref.supabase.co
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+   ```
+5. Stop the dev server (Ctrl+C) and run `npm run dev` again. Environment files are only read at startup.
+6. In Supabase, go to **Authentication → Providers** and make sure **Email** is enabled. Under **Authentication → URL Configuration**, set the Site URL to `http://localhost:3000`.
+
+Registration and sign-in will then work. Dashboards stay empty until the database schema is added (see the roadmap).
+
 ## Routes
 
 | Route | Area |

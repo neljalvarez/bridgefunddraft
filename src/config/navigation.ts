@@ -63,6 +63,20 @@ export const ROLE_CONFIG: Record<UserRole, RoleConfig> = {
   },
 };
 
+export interface PublicNavItem {
+  label: string;
+  href: string;
+}
+
+/** Landing-page navigation. Hash links resolve from any public page. */
+export const PUBLIC_NAV: PublicNavItem[] = [
+  { label: "How It Works", href: "/#how-it-works" },
+  { label: "For Students", href: "/#for-students" },
+  { label: "For Organizations", href: "/#for-organizations" },
+  { label: "Our Impact", href: "/#impact" },
+  { label: "About", href: "/#about" },
+];
+
 export function getRoleHome(role: UserRole): string {
   return ROLE_CONFIG[role].home;
 }
