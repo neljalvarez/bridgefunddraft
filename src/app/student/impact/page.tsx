@@ -1,29 +1,18 @@
-import { TrendingUp } from "lucide-react";
 import type { Metadata } from "next";
 
-import { LineChartCard } from "@/components/charts/line-chart-card";
 import { PageHeader } from "@/components/layout/page-header";
-import { getStudentImpact } from "@/services/impact";
+import { ImpactView } from "@/components/student/impact-view";
 
 export const metadata: Metadata = { title: "Impact" };
 
-export default async function StudentImpactPage() {
-  const impact = await getStudentImpact();
-
+export default function StudentImpactPage() {
   return (
     <>
       <PageHeader
         title="Impact"
-        description="See how financial support has helped you move forward."
+        description="How much confirmed support has reached you, based only on what you’ve marked approved or received."
       />
-      <LineChartCard
-        title="Progress over time"
-        description="Based on your recorded applications and support."
-        data={impact.ok ? impact.data.series : []}
-        emptyIcon={TrendingUp}
-        emptyTitle="Nothing to show yet"
-        emptyDescription="Your impact appears here once you have applications and support on record."
-      />
+      <ImpactView />
     </>
   );
 }

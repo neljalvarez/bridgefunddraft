@@ -156,6 +156,16 @@
   animation: drawer-out 150ms ease-in;
 }
 
+/* Hatched fill = "potential / pending, not counted" in progress bars. */
+.bg-hatched {
+  background-color: #eff6ff;
+  background-image: repeating-linear-gradient(
+    135deg,
+    #93c5fd 0 3px,
+    transparent 3px 7px
+  );
+}
+
 /* Landing page: one entrance fade and one "bridge draws itself" stroke. */
 @keyframes fade-up {
   from {

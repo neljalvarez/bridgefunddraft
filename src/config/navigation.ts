@@ -1,12 +1,14 @@
 import {
   BarChart3,
-  Compass,
+  Bookmark,
   FileText,
   FolderKanban,
+  FolderOpen,
   Handshake,
   Inbox,
   LayoutDashboard,
   type LucideIcon,
+  Settings,
   Wallet,
 } from "lucide-react";
 
@@ -34,12 +36,14 @@ export const ROLE_CONFIG: Record<UserRole, RoleConfig> = {
     label: "Student",
     home: "/student/dashboard",
     nav: [
-      { label: "Dashboard", href: "/student/dashboard", icon: LayoutDashboard },
-      { label: "Opportunities", href: "/student/opportunities", icon: Compass },
-      { label: "Resolver", href: "/student/resolver", icon: Wallet },
-      { label: "Matches", href: "/student/matches", icon: Handshake },
+      { label: "Overview", href: "/student/dashboard", icon: LayoutDashboard },
+      { label: "My Opportunities", href: "/student/opportunities", icon: FolderOpen },
+      { label: "Gap Resolver", href: "/student/resolver", icon: Wallet },
+      { label: "Funding Matches", href: "/student/matches", icon: Handshake },
       { label: "Applications", href: "/student/applications", icon: FileText },
+      { label: "Saved Resources", href: "/student/saved", icon: Bookmark },
       { label: "Impact", href: "/student/impact", icon: BarChart3 },
+      { label: "Settings", href: "/student/settings", icon: Settings },
     ],
   },
   organization: {

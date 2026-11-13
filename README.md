@@ -78,9 +78,30 @@ Registration and sign-in will then work. Dashboards stay empty until the databas
 | --- | --- |
 | `/` | Public landing page |
 | `/login`, `/register` | Authentication (`/register?role=organization` preselects a role) |
-| `/student/dashboard`, `/opportunities`, `/resolver`, `/matches`, `/applications`, `/impact` | Student workspace |
+| `/student/dashboard`, `/opportunities`, `/resolver`, `/matches`, `/applications`, `/saved`, `/impact`, `/settings` | Student portal (see below) |
 | `/organization/dashboard`, `/programs`, `/applications`, `/impact` | Organization workspace |
 | `/admin/dashboard` | Admin workspace |
+
+## Student portal
+
+The student portal is fully interactive. Its centerpiece is the six-step **Gap Resolver**: opportunity info, expense breakdown (add/edit/delete, auto totals, multi-currency), eligibility details, gap analysis, resolution plan, and results with next actions. Opportunities are saved to **My Opportunities** and can be reopened at any step (`/student/resolver?opportunity=<id>&step=<n>`).
+
+**Four kinds of support are never mixed.** Each claim lands in exactly one bucket:
+
+| Kind | Meaning | Counts as funding? |
+| --- | --- | --- |
+| Delivered | Support you have received | Yes |
+| Approved | Confirmed by the provider, not yet delivered | Yes |
+| Potential | Planned or applied for, awaiting a decision | **No** |
+| Estimated | Self-directed reductions such as free alternatives | **No** |
+
+`remaining gap = original total − personal contribution − (approved + delivered)`. Pending support is never counted. The math lives in `src/lib/gap/calculate.ts`.
+
+**Privacy.** The portal asks only for country of residence, education level, optional field and enrollment, a need-based opt-in, and an approximate contribution. It never asks for income, bank details, ID numbers, or immigration status.
+
+**Persistence (current).** Data is stored in this browser's `localStorage` via `src/lib/storage/student-store.ts`; nothing syncs across devices. That store is the single swap point: replace it with Supabase-backed services without touching the views.
+
+**Demo data.** "Explore with demo data" loads two fictional opportunities and a fictional support catalog (`src/data/`). Everything is labeled as demo and removable from the dashboard or Settings. Exchange rates in `src/config/currencies.ts` are fixed approximations, not live rates.
 
 ## Project structure
 
@@ -97,13 +118,17 @@ src/
 ├── components/
 │   ├── ui/                   Primitives: Button, Card, Badge, Input, Label, Separator, Sheet
 │   ├── layout/               AppShell, Sidebar, Topbar, MobileNav, PageHeader, public header/footer, Logo
-│   ├── shared/               StatCard, EmptyState, StatusBadge
+│   ├── shared/               StatCard, EmptyState, StatusBadge, Field, PortalSkeleton
+│   ├── student/              Student portal views; resolver/ holds the 6-step Gap Resolver wizard
 │   ├── charts/               BarChartCard, LineChartCard (Recharts) + empty-state frame
 │   ├── auth/                 LoginForm, RegisterForm, RoleSelector, FormMessage
 │   └── marketing/            Landing page sections
-├── config/                   Static configuration: navigation, site, status labels, barrier categories, chart colors
+├── config/                   Static configuration: navigation, site, status labels, currencies, countries, assistance kinds, chart colors
+├── data/                     Clearly labeled fictional demo data (support catalog, demo opportunities)
 ├── hooks/                    Reusable React hooks (e.g. useActiveNav)
-├── lib/                      Utilities: cn, formatters, env, aggregation, Supabase clients
+├── lib/                      Utilities: cn, formatters, env, Supabase clients
+│   ├── gap/                  Pure gap math, matching, validation, claims, portfolio, next actions
+│   └── storage/              Student portal store (localStorage) + sanitizer
 ├── services/                 Data access. One file per domain, all return ServiceResult<T>
 └── types/                    Shared data models and enums
 ```
@@ -155,7 +180,7 @@ Not built yet, in a sensible order:
 
 1. Supabase schema and Row Level Security policies matching `src/types/`, then replace the service stubs.
 2. Route protection with `src/proxy.ts` (Next.js 16's replacement for middleware) plus server-side role checks.
-3. Barrier intake form in the resolver, then opportunity and program list UIs.
+3. Move student portal data from `localStorage` to Supabase, and replace the demo support catalog with verified provider listings.
 4. Application submission and review workflow.
 5. Admin verification queue for organizations.
 6. Automated tests.

@@ -1,6 +1,7 @@
 export * from "./application";
 export * from "./barrier";
 export * from "./common";
+export * from "./gap";
 export * from "./impact";
 export * from "./match";
 export * from "./opportunity";

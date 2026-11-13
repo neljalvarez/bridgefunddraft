@@ -1,30 +1,18 @@
-import { Handshake } from "lucide-react";
 import type { Metadata } from "next";
-import Link from "next/link";
 
 import { PageHeader } from "@/components/layout/page-header";
-import { EmptyState } from "@/components/shared/empty-state";
-import { Button } from "@/components/ui/button";
+import { MatchesView } from "@/components/student/matches-view";
 
-export const metadata: Metadata = { title: "Matches" };
+export const metadata: Metadata = { title: "Funding Matches" };
 
 export default function StudentMatchesPage() {
   return (
     <>
       <PageHeader
-        title="Matches"
-        description="Verified support programs suggested for your financial barriers."
+        title="Funding Matches"
+        description="Support matched to each expense of an opportunity, based on your eligibility details."
       />
-      <EmptyState
-        icon={Handshake}
-        title="No matches yet"
-        description="Matches are created from the barriers you describe. Start by describing one in the resolver."
-        action={
-          <Button asChild>
-            <Link href="/student/resolver">Open the resolver</Link>
-          </Button>
-        }
-      />
+      <MatchesView />
     </>
   );
 }

@@ -1,4 +1,9 @@
-import type { ApplicationStatus, VerificationStatus } from "@/types";
+import type {
+  ApplicationStatus,
+  ClaimStatus,
+  OpportunityStatus,
+  VerificationStatus,
+} from "@/types";
 
 export type BadgeTone = "neutral" | "info" | "success" | "warning" | "danger";
 
@@ -14,6 +19,20 @@ export const APPLICATION_STATUS_META: Record<ApplicationStatus, StatusMeta> = {
   approved: { label: "Approved", tone: "success" },
   declined: { label: "Declined", tone: "danger" },
   withdrawn: { label: "Withdrawn", tone: "neutral" },
+};
+
+export const CLAIM_STATUS_META: Record<ClaimStatus, StatusMeta> = {
+  planned: { label: "Planned", tone: "neutral" },
+  applied: { label: "Applied · pending", tone: "warning" },
+  approved: { label: "Approved", tone: "success" },
+  received: { label: "Received", tone: "success" },
+  declined: { label: "Declined", tone: "danger" },
+};
+
+export const OPPORTUNITY_STATUS_META: Record<OpportunityStatus, StatusMeta> = {
+  draft: { label: "Draft", tone: "neutral" },
+  active: { label: "Saved", tone: "info" },
+  archived: { label: "Archived", tone: "neutral" },
 };
 
 export const VERIFICATION_STATUS_META: Record<VerificationStatus, StatusMeta> = {

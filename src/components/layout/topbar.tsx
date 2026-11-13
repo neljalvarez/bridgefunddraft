@@ -14,7 +14,7 @@ export function Topbar({ role }: { role: UserRole }) {
       <Logo className="lg:hidden" href={ROLE_CONFIG[role].home} />
 
       <div className="ml-auto flex items-center gap-3">
-        <Badge tone="info">{ROLE_CONFIG[role].label}</Badge>
+        <Badge tone="info" className="hidden sm:inline-flex">{ROLE_CONFIG[role].label}</Badge>
         <Button asChild variant="outline" size="sm">
           <Link href="/login">Switch account</Link>
         </Button>

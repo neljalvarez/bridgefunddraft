@@ -4,6 +4,9 @@ export type ID = string;
 /** ISO 8601 timestamp string, e.g. "2026-11-12T08:30:00Z". */
 export type ISODateString = string;
 
+/** Calendar date without a time, "YYYY-MM-DD". Compare these as strings. */
+export type DateOnlyString = string;
+
 /** Monetary amount stored in minor units (cents) to avoid float errors. */
 export interface Money {
   amountMinor: number;
